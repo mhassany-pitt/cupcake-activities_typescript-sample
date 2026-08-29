@@ -1,0 +1,90 @@
+$schema: https://learning-contents.org/schemas/multiple-choice-question/0.1.0
+license: MIT
+locale: en-US
+id: mcq_bank_account_deposit
+title: TypeScript Class Deposit Method
+description: Choose the correct implementation of the deposit method in TypeScript.
+authors:
+  - first: Jone
+    last: Doe
+    email: jone.doe@example.com
+    affiliation: University of John Doe
+pedagogy:
+  activity: multiple-choice-question
+  difficulty: intermediate
+  prereq_topics:
+    - classes
+    - types
+  topics:
+    - classes
+    - methods
+    - types
+include_choices: 3
+question: |
+  Given the following TypeScript interface and class skeleton:
+  
+  ```typescript
+  interface IBankAccount {
+      owner: string;
+      balance: number;
+      deposit(amount: number): number;
+  }
+
+  class BankAccount implements IBankAccount {
+      owner: string;
+      balance: number;
+
+      constructor(owner: string, balance: number) {
+          this.owner = owner;
+          this.balance = balance;
+      }
+  }
+  ```
+  
+  Which of the following represents the correct implementation for a typed `deposit` method in TypeScript that adds a positive `amount` to the account balance and returns the new balance?
+choices:
+  - body: |
+      ```typescript
+      deposit(amount: number): number {
+          if (amount > 0) {
+              this.balance += amount;
+              return this.balance;
+          }
+          throw new Error("Deposit amount must be positive");
+      }
+      ```
+    role: solution
+    include: always
+    order: 1
+    explanations:
+      - body: |
+          This is the correct implementation. It specifies parameter and return type annotations (`amount: number`: `number`), validates that the deposit `amount > 0`, updates `this.balance` via `+=`, and returns the updated balance.
+  - body: |
+      ```typescript
+      deposit(amount: string): number {
+          if (amount.length > 0) {
+              this.balance += Number(amount);
+              return this.balance;
+          }
+          return this.balance;
+      }
+      ```
+    role: distractor
+    explanations:
+      - body: |
+          Incorrect. The parameter type `amount: string` violates the `IBankAccount` contract, which requires `deposit(amount: number): number`.
+  - body: |
+      ```typescript
+      deposit(amount: number): number {
+          this.balance =+ amount;
+          return this.balance;
+      }
+      ```
+    role: distractor
+    explanations:
+      - body: |
+          Incorrect. The operator `=+` assigns positive `amount` (`this.balance = +amount`), which overwrites the balance rather than adding to it. The correct operator is `+=`.
+  - body: None
+    role: distractor
+    include: always
+    order: 2

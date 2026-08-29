@@ -1,0 +1,62 @@
+$schema: https://learning-contents.org/schemas/worked-example/0.1.0
+source: main.ts
+license: MIT
+locale: en-US
+id: we_bank_account
+title: Bank Account Management
+description: Learn how to use TypeScript interfaces, classes, and typed methods to manage a bank account.
+authors:
+  - first: Jone
+    last: Doe
+    email: jone.doe@example.com
+    affiliation: University of John Doe
+pedagogy:
+  activity: worked-example
+  difficulty: novice
+  prereq_topics: []
+  topics:
+    - classes
+    - types
+runtime:
+  language: typescript
+statement: |
+  This worked example demonstrates how `BankAccount` state is managed in TypeScript using interfaces, classes, and strong types. We'll examine:
+  1. Typed interface (`IBankAccount`)
+  2. Class constructor (`constructor`)
+  3. Typed deposit and withdrawal methods (`deposit`, `withdraw`)
+executions:
+  - title: Bob's Account
+    stdin: []
+    stdout: |-
+      Deposited 100
+      Withdrew 50
+      Balance: 250
+    console: |-
+      Deposited 100
+      Withdrew 50
+      Balance: 250
+    status: pass
+elements:
+  - type: explanation
+    location:
+      snippet: "class BankAccount implements IBankAccount {"
+    explanations:
+      - body: |
+          The `BankAccount` class implements the `IBankAccount` contract in TypeScript:
+          ```typescript
+          interface IBankAccount {
+              owner: string;
+              balance: number;
+              deposit(amount: number): number;
+              withdraw(amount: number): number;
+          }
+          ```
+          This enforces static type safety for properties and method signatures at compile time.
+      - body: |
+          ...
+  - type: explanation
+    location:
+      snippet: "if (0 < amount && amount <= this.balance) {"
+    explanations:
+      - body: |
+          This condition validates that the withdrawal transaction is correct: it checks if the `amount` is greater than `0` and is less than or equal to the current `this.balance`.
