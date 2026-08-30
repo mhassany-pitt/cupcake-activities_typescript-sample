@@ -1,28 +1,30 @@
-$schema: https://learning-contents.org/schemas/worked-example/0.1.0
+---
+"$schema": https://learning-contents.org/schemas/worked-example/0.1.0
 source: main.ts
 license: MIT
 locale: en-US
 id: we_bank_account
 title: Bank Account Management in TypeScript
-description: Learn how to use TypeScript interfaces, classes, and typed methods to manage state in an object-oriented BankAccount implementation.
+description: Learn how to use TypeScript interfaces, classes, and typed methods to
+  manage state in an object-oriented BankAccount implementation.
 authors:
-  - first: Jone
-    last: Doe
-    email: jone.doe@example.com
-    affiliation: University of John Doe
+- first: Jone
+  last: Doe
+  email: jone.doe@example.com
+  affiliation: University of John Doe
 pedagogy:
   activity: worked-example
   difficulty: novice
   prereq_topics:
-    - basic-syntax
-    - variables
+  - basic-syntax
+  - variables
   topics:
-    - interfaces
-    - classes
-    - constructors
-    - methods
-    - types
-    - conditional-logic
+  - interfaces
+  - classes
+  - constructors
+  - methods
+  - types
+  - conditional-logic
 runtime:
   language: typescript
 statement: |
@@ -33,106 +35,108 @@ statement: |
   4. The `withdraw` method with compound guard logic protecting against overdrafts.
   5. The `main` execution function demonstrating instantiation, method calls, and state inspection.
 executions:
-  - title: Bob's Account
-    stdin: []
-    stdout: |-
-      Deposited 100
-      Withdrew 50
-      Balance: 250
-    console: |-
-      Deposited 100
-      Withdrew 50
-      Balance: 250
-    status: pass
+- title: Bob's Account
+  stdin: []
+  stdout: |-
+    Deposited 100
+    Withdrew 50
+    Balance: 250
+  console: |-
+    Deposited 100
+    Withdrew 50
+    Balance: 250
+  status: pass
 elements:
-  - type: explanation
-    location:
-      snippet: |-
-        interface IBankAccount {
-            owner: string;
-            balance: number;
-            deposit(amount: number): number;
-            withdraw(amount: number): number;
-        }
-    explanations:
-      - body: |
-          ### 1. The Interface Contract (`IBankAccount`)
-          In TypeScript, an `interface` defines a **type contract** that specifies the shape an object or class must satisfy:
-          * `owner: string` and `balance: number`: Required instance properties with their explicit primitive types.
-          * `deposit(amount: number): number` and `withdraw(amount: number): number`: Method signatures defining parameter types and return types.
-          
-          Interfaces are compile-time constructs in TypeScript; they produce zero runtime JavaScript overhead but ensure strict type safety during development.
-  - type: explanation
-    location:
-      snippet: |-
-        class BankAccount implements IBankAccount {
-            owner: string;
-            balance: number;
+- type: explanation
+  location:
+    snippet: |-
+      interface IBankAccount {
+          owner: string;
+          balance: number;
+          deposit(amount: number): number;
+          withdraw(amount: number): number;
+      }
+  explanations:
+  - body: |
+      ### 1. The Interface Contract (`IBankAccount`)
+      In TypeScript, an `interface` defines a **type contract** that specifies the shape an object or class must satisfy:
+      * `owner: string` and `balance: number`: Required instance properties with their explicit primitive types.
+      * `deposit(amount: number): number` and `withdraw(amount: number): number`: Method signatures defining parameter types and return types.
 
-            constructor(owner: string, balance: number) {
-                this.owner = owner;
-                this.balance = balance;
-            }
-    explanations:
-      - body: |
-          ### 2. Class Declaration and Constructor Initialization
-          * `class BankAccount implements IBankAccount`: The `implements` clause instructs the TypeScript compiler to verify that `BankAccount` fulfills all properties and methods declared in `IBankAccount`.
-          * `owner: string` and `balance: number`: Class property declarations that establish the fields held by every instance.
-          * `constructor(owner: string, balance: number)`: Special initialization method invoked when creating a new instance via `new BankAccount(...)`.
-          * Inside the constructor, `this.owner = owner` and `this.balance = balance` bind the argument values to the newly created instance properties using the `this` reference.
-  - type: explanation
-    location:
-      snippet: |-
-            deposit(amount: number): number {
-                if (amount > 0) {
-                    this.balance = this.balance + amount;
-                    console.log(`Deposited ${amount}`);
-                }
-                return this.balance;
-            }
-    explanations:
-      - body: |
-          ### 3. The `deposit` Method
-          The `deposit` method accepts a numeric `amount` and returns the updated account `balance`:
-          * **Input Validation**: `if (amount > 0)` prevents invalid zero or negative deposits from corrupting the account balance.
-          * **State Mutation**: `this.balance = this.balance + amount;` updates the instance balance by adding the deposit amount.
-          * **Feedback Logging**: `console.log(\`Deposited \${amount}\`);` uses ES6 template literals to log transaction confirmation.
-          * **Return Value**: `return this.balance;` returns the new balance to the caller, satisfying the `number` return type signature.
-  - type: explanation
-    location:
-      snippet: |-
-            withdraw(amount: number): number {
-                if (0 < amount && amount <= this.balance) {
-                    this.balance = this.balance - amount;
-                    console.log(`Withdrew ${amount}`);
-                } else {
-                    console.log("Insufficient funds");
-                }
-                return this.balance;
-            }
-    explanations:
-      - body: |
-          ### 4. The `withdraw` Method and Overdraft Protection
-          The `withdraw` method handles debits with safe boundary checking:
-          * **Compound Guard Condition**: `if (0 < amount && amount <= this.balance)` ensures two vital business rules:
-            1. `0 < amount`: The requested withdrawal must be positive.
-            2. `amount <= this.balance`: The account must have sufficient funds to cover the withdrawal, permitting withdrawals up to and including the entire current balance.
-          * **Successful Debit**: If valid, `this.balance = this.balance - amount;` debits the account and logs the transaction.
-          * **Fallback Branch**: The `else` block gracefully handles insufficient funds or invalid amounts by logging `"Insufficient funds"` without modifying `this.balance`.
-          * **Return Value**: Returns the current `this.balance` in all cases.
-  - type: explanation
-    location:
-      snippet: |-
-        function main(): void {
-            const account: BankAccount = new BankAccount("Bob", 200);
-            account.deposit(100);
-            account.withdraw(50);
-            console.log(`Balance: ${account.balance}`);
-        }
-    explanations:
-      - body: |
-          ### 5. Execution Flow in `main`
-          * `const account: BankAccount = new BankAccount("Bob", 200);`: Instantiates a `BankAccount` object for `"Bob"` with an initial balance of `200`.
-          * `account.deposit(100);`: Executes a deposit of `100`, logging `"Deposited 100"` and increasing balance to `300`.
-          * `account.withdraw(50);`: Executes a withdrawal of `50`, logging `"Withdrew 50"` and decreasing balance to `250`.
-          * `console.log(\`Balance: \${account.balance}\`);`: Directly reads the instance property `account.balance` to output the final balance (`"Balance: 250"`).
+      Interfaces are compile-time constructs in TypeScript; they produce zero runtime JavaScript overhead but ensure strict type safety during development.
+- type: explanation
+  location:
+    snippet: |-
+      class BankAccount implements IBankAccount {
+          owner: string;
+          balance: number;
+
+          constructor(owner: string, balance: number) {
+              this.owner = owner;
+              this.balance = balance;
+          }
+  explanations:
+  - body: |
+      ### 2. Class Declaration and Constructor Initialization
+      * `class BankAccount implements IBankAccount`: The `implements` clause instructs the TypeScript compiler to verify that `BankAccount` fulfills all properties and methods declared in `IBankAccount`.
+      * `owner: string` and `balance: number`: Class property declarations that establish the fields held by every instance.
+      * `constructor(owner: string, balance: number)`: Special initialization method invoked when creating a new instance via `new BankAccount(...)`.
+      * Inside the constructor, `this.owner = owner` and `this.balance = balance` bind the argument values to the newly created instance properties using the `this` reference.
+- type: explanation
+  location:
+    snippet: |2-
+
+          deposit(amount: number): number {
+              if (amount > 0) {
+                  this.balance = this.balance + amount;
+                  console.log(`Deposited ${amount}`);
+              }
+              return this.balance;
+          }
+  explanations:
+  - body: |
+      ### 3. The `deposit` Method
+      The `deposit` method accepts a numeric `amount` and returns the updated account `balance`:
+      * **Input Validation**: `if (amount > 0)` prevents invalid zero or negative deposits from corrupting the account balance.
+      * **State Mutation**: `this.balance = this.balance + amount;` updates the instance balance by adding the deposit amount.
+      * **Feedback Logging**: `console.log(\`Deposited \${amount}\`);` uses ES6 template literals to log transaction confirmation.
+      * **Return Value**: `return this.balance;` returns the new balance to the caller, satisfying the `number` return type signature.
+- type: explanation
+  location:
+    snippet: |2-
+
+          withdraw(amount: number): number {
+              if (0 < amount && amount <= this.balance) {
+                  this.balance = this.balance - amount;
+                  console.log(`Withdrew ${amount}`);
+              } else {
+                  console.log("Insufficient funds");
+              }
+              return this.balance;
+          }
+  explanations:
+  - body: |
+      ### 4. The `withdraw` Method and Overdraft Protection
+      The `withdraw` method handles debits with safe boundary checking:
+      * **Compound Guard Condition**: `if (0 < amount && amount <= this.balance)` ensures two vital business rules:
+        1. `0 < amount`: The requested withdrawal must be positive.
+        2. `amount <= this.balance`: The account must have sufficient funds to cover the withdrawal, permitting withdrawals up to and including the entire current balance.
+      * **Successful Debit**: If valid, `this.balance = this.balance - amount;` debits the account and logs the transaction.
+      * **Fallback Branch**: The `else` block gracefully handles insufficient funds or invalid amounts by logging `"Insufficient funds"` without modifying `this.balance`.
+      * **Return Value**: Returns the current `this.balance` in all cases.
+- type: explanation
+  location:
+    snippet: |-
+      function main(): void {
+          const account: BankAccount = new BankAccount("Bob", 200);
+          account.deposit(100);
+          account.withdraw(50);
+          console.log(`Balance: ${account.balance}`);
+      }
+  explanations:
+  - body: |
+      ### 5. Execution Flow in `main`
+      * `const account: BankAccount = new BankAccount("Bob", 200);`: Instantiates a `BankAccount` object for `"Bob"` with an initial balance of `200`.
+      * `account.deposit(100);`: Executes a deposit of `100`, logging `"Deposited 100"` and increasing balance to `300`.
+      * `account.withdraw(50);`: Executes a withdrawal of `50`, logging `"Withdrew 50"` and decreasing balance to `250`.
+      * `console.log(\`Balance: \${account.balance}\`);`: Directly reads the instance property `account.balance` to output the final balance (`"Balance: 250"`).
