@@ -3,8 +3,8 @@ source: main.ts
 license: MIT
 locale: en-US
 id: cc_bank_account
-title: Complete the BankAccount Logic
-description: Fill in the critical logic for account balance updates and validation.
+title: Complete the BankAccount TypeScript Implementation
+description: Fill in the essential TypeScript keywords, operators, and method calls to enforce contracts, update state, and validate transactions.
 authors:
   - first: Jone
     last: Doe
@@ -13,16 +13,24 @@ authors:
 pedagogy:
   activity: code-completion
   difficulty: novice
-  prereq_topics: []
+  prereq_topics:
+    - basic-syntax
+    - variables
   topics:
+    - interfaces
     - classes
     - arithmetic
+    - relational-operators
+    - methods
 runtime:
   language: typescript
 statement: |
-  Complete the typed `BankAccount` class by adding the missing updates and validation checks. Focus on:
-  - Updating `this.balance` during a deposit transaction
-  - Ensuring withdrawal amounts do not exceed the current balance
+  Complete the typed `BankAccount` class implementation by selecting the correct keywords, operators, and method identifiers.
+  Make sure to:
+  1. Enforce the `IBankAccount` interface contract on the class.
+  2. Correctly increment the balance during a deposit.
+  3. Ensure that withdrawal requests do not exceed the available balance.
+  4. Invoke the proper transaction method in the `main` driver function.
 executions:
   - title: Bob's Account
     stdin: []
@@ -39,6 +47,32 @@ executions:
 elements:
   - type: blank
     location:
+      context: "class BankAccount implements IBankAccount {"
+      snippet: "implements"
+      nth: 1
+    choices:
+      - snippet: "implements"
+        role: solution
+        explanations:
+          - body: |
+              Correct! In TypeScript, the `implements` keyword declares that a class must adhere to the structural contract defined by an `interface` (`IBankAccount`).
+      - snippet: "extends"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. In TypeScript and JavaScript, `extends` is used for **class inheritance** (inheriting from a parent class) or interface inheritance, whereas `implements` is used when a class implements an interface contract.
+      - snippet: "instanceof"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. `instanceof` is a runtime operator used in expressions to test whether an object's prototype chain contains the prototype of a constructor function, not a declaration keyword.
+      - snippet: "satisfies"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. `satisfies` is a TypeScript expression operator used to validate that an expression matches a type without widening it; it cannot be used in a class declaration clause.
+  - type: blank
+    location:
       context: "this.balance = this.balance + amount;"
       snippet: "+"
       nth: 1
@@ -47,12 +81,22 @@ elements:
         role: solution
         explanations:
           - body: |
-              Use the `+` operator to **increase** the current balance by the deposit amount.
+              Correct! The addition operator (`+`) adds the deposited `amount` to the current `this.balance`, increasing the total funds.
       - snippet: "-"
         role: distractor
         explanations:
           - body: |
-              This would use the `-` operator, which **decreases** the balance instead of adding to it.
+              Incorrect. The subtraction operator (`-`) would deduct money from the account during a deposit instead of crediting it.
+      - snippet: "*"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. The multiplication operator (`*`) would multiply the existing balance by the deposit amount, yielding an incorrect balance.
+      - snippet: "="
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Using `=` here would result in a syntax error (`this.balance = this.balance = amount;`) or simply overwrite the balance with `amount` rather than accumulating funds.
   - type: blank
     location:
       context: "if (0 < amount && amount <= this.balance) {"
@@ -63,9 +107,40 @@ elements:
         role: solution
         explanations:
           - body: |
-              You must check if the withdrawal amount is less than or equal (`<=`) to the current balance, ensuring the user has **sufficient funds**.
+              Correct! The less-than-or-equal operator (`<=`) ensures the user has sufficient funds, allowing withdrawals up to and including the exact total balance without overdrafting.
+      - snippet: "<"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. The strictly-less-than operator (`<`) would prevent account holders from withdrawing their exact entire balance (withdrawing down to zero).
+      - snippet: ">="
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Using `>=` would invert the business logic, permitting withdrawals only when the amount is greater than or equal to the balance, guaranteeing an overdraft.
       - snippet: ">"
         role: distractor
         explanations:
           - body: |
-              This would use the `>` operator, which checks if the withdrawal amount is strictly greater than the balance, allowing the user to withdraw more money than they have!
+              Incorrect. Using `>` would only permit transactions that exceed the current balance, causing an immediate overdraft into negative funds.
+  - type: blank
+    location:
+      context: "account.deposit(100);"
+      snippet: "deposit"
+      nth: 1
+    choices:
+      - snippet: "deposit"
+        role: solution
+        explanations:
+          - body: |
+              Correct! Invokes the `deposit` method with an argument of `100` to credit the account.
+      - snippet: "withdraw"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Invoking `withdraw(100)` would debit the account instead of performing the required deposit transaction.
+      - snippet: "balance"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. `balance` is a numeric property, not a callable method function; attempting `account.balance(100)` causes a TypeScript compilation error.
