@@ -46,14 +46,12 @@ elements:
     group: bank-members
     location:
       snippet: |2-
-
             constructor(owner: string, balance: number) {
                 this.owner = owner;
                 this.balance = balance;
             }
     choices:
       - snippet: |2-
-
               constructor(owner: string, balance: number) {
                   this.owner = owner;
                   this.balance = balance;
@@ -75,7 +73,6 @@ elements:
     group: bank-members
     location:
       snippet: |2-
-
             deposit(amount: number): number {
                 if (amount > 0) {
                     this.balance = this.balance + amount;
@@ -85,7 +82,6 @@ elements:
             }
     choices:
       - snippet: |2-
-
               deposit(amount: number): number {
                   if (amount > 0) {
                       this.balance = this.balance + amount;
@@ -123,7 +119,6 @@ elements:
     group: bank-members
     location:
       snippet: |2-
-
             withdraw(amount: number): number {
                 if (0 < amount && amount <= this.balance) {
                     this.balance = this.balance - amount;
@@ -135,7 +130,6 @@ elements:
             }
     choices:
       - snippet: |2-
-
               withdraw(amount: number): number {
                   if (0 < amount && amount <= this.balance) {
                       this.balance = this.balance - amount;
